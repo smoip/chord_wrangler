@@ -43,25 +43,42 @@ describe MakeChords do
       expect(@chords.base_chord).to eq( [61, 62, 63, 64] )
     end
     it "should assign chords to score" do
-      expect(@chords.generate_score[0]).to be_kind_of(Array)
+      expect(@chords.score[0]).to be_kind_of(Array)
     end
-  end
 
-  describe "shift_pitch" do
-    it "should add the base_pitch to a given chord array" do
-      expect(@chords.shift_pitch( [1, 2, 3, 4], 60 )).to eq( [61, 62, 63, 64] )
+    describe "generate_phrase" do
+
+      before { @base_chord = [ 1, 2, 3, 4 ]}
+
+      it "should assign chords 'phrase_length' number of times" do
+        expect(@chords.generate_phrase(@base_chord).length).to eq(@chords.phrase_length)
+      end
+
+      it "should assign arrays of chords to phrase" do
+        expect(@chords.generate_phrase(@base_chord)[0]).to be_kind_of(Array)
+      end
     end
   end
 
   describe "choose_phrase_length" do
+    before { @chords.choose_phrase_length }
     it "should choose 3, 4, 6, or 8" do
-      expect(@chords.choose_phrase_length).to be_between(3, 8).inclusive
-      expect(@chords.choose_phrase_length).not_to be(5, 7)
+      expect(@chords.phrase_length).to be_between(3, 8).inclusive
+      expect(@chords.phrase_length).not_to be(5)
+      expect(@chords.phrase_length).not_to be(7)
     end
   end
 
   describe "chord transformations" do
+    let(:chord) { [1, 3, 5, 7] }
+
     describe "transform_chord" do
+    end
+
+    describe "trans_shift_pitch" do
+      it "should add the base_pitch to a given chord array" do
+        expect(@chords.trans_shift_pitch( chord, 60 )).to eq( [61, 63, 65, 67] )
+      end
     end
 
     describe "trans_alberti" do
@@ -80,12 +97,21 @@ describe MakeChords do
     end
 
     describe "trans_invert_1" do
+      it "should rotate the collection by 1 (first inversion)" do
+        expect(@chords.trans_invert_1(chord)).to eq( [ 3, 5, 7, 1 ] )
+      end
     end
 
     describe "trans_invert_2" do
+      it "should rotate the collection by 2 (second inversion)" do
+        expect(@chords.trans_invert_2(chord)).to eq( [ 5, 7, 1, 3 ] )
+      end
     end
 
     describe "trans_invert_3" do
+      it "should rotate the collection by 3 (third inversion)" do
+        expect(@chords.trans_invert_3(chord)).to eq( [ 7, 1, 3, 5 ] )
+      end
     end
   end
 

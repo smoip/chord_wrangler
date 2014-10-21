@@ -23,6 +23,7 @@ class MakeChords
   end
 
   def choose_phrase_length
+    @phrase_length = [3, 4, 6, 8].shuffle.first
   end
 
   def trans_ascending(chord)
@@ -33,12 +34,33 @@ class MakeChords
     chord.sort.reverse!
   end
 
-  def generate_score
-    @base_chord = shift_pitch(generate_chord, @base_pitch)
-    @score << @base_chord
+  def trans_invert_1(chord)
+    chord.rotate
   end
 
-  def shift_pitch(chord, shift_amount)
+  def trans_invert_2(chord)
+    chord.rotate(2)
+  end
+
+  def trans_invert_3(chord)
+    chord.rotate(3)
+  end
+
+  def generate_score
+    @base_chord = trans_shift_pitch(generate_chord, @base_pitch)
+    self.choose_phrase_length
+    @score << self.generate_phrase(@base_chord)
+  end
+
+  def generate_phrase(chord)
+    phrase = []
+    @phrase_length.times do
+      phrase << chord
+    end
+    return phrase
+  end
+
+  def trans_shift_pitch(chord, shift_amount)
     chord.each.collect do |member|
       member += shift_amount
     end
@@ -46,6 +68,10 @@ class MakeChords
 
   def print_score
     puts "Generated Score: #{@score.flatten.to_s}"
+  end
+
+  def print_score_with_groupings
+    puts "Generated Score(groupings shown): #{@score}"
   end
 
   def print_score_max_format
@@ -60,5 +86,5 @@ end
 if __FILE__==$0
   chords = MakeChords.new
   chords.generate_score
-  chords.print_score_max_format
+  chords.print_score_with_groupings
 end
