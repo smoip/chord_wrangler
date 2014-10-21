@@ -66,6 +66,18 @@ class MakeChords
     end
   end
 
+  def trans_parsimonious_voice_leading(chord)
+    unique_token = false
+    until unique_token == true
+      trans_chord = chord.dup
+      changed_member = ( rand(chord.length) ) - 1
+      change_amount = [ -1, 1, -2, 2 ].shuffle.first
+      trans_chord[changed_member] += change_amount
+      unique_token = true if trans_chord.uniq == trans_chord
+    end
+    return trans_chord
+  end
+
   def print_score
     puts "Generated Score: #{@score.flatten.to_s}"
   end

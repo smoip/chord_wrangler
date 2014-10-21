@@ -113,6 +113,15 @@ describe MakeChords do
         expect(@chords.trans_invert_3(chord)).to eq( [ 7, 1, 3, 5 ] )
       end
     end
+
+    describe "trans_parsimonious_voice_leading" do
+      it "should alter one chord member" do
+        expect(@chords.trans_parsimonious_voice_leading(chord)).not_to eq(chord)
+      end
+      it "should check for uniqueness" do
+        expect(@chords.trans_parsimonious_voice_leading(chord).uniq.length).to eq(chord.length)
+      end
+    end
   end
 
   describe "print_score_max_format" do
