@@ -72,9 +72,6 @@ describe MakeChords do
   describe "chord transformations" do
     let(:chord) { [1, 3, 5, 7] }
 
-    describe "transform_chord" do
-    end
-
     describe "choose_transformation" do
       it "should return an altered chord array" do
         expect(@chords.choose_transformation(chord)).not_to eq(chord)
