@@ -75,6 +75,13 @@ describe MakeChords do
     describe "transform_chord" do
     end
 
+    describe "choose_transformation" do
+      it "should return an altered chord array" do
+        expect(@chords.choose_transformation(chord)).not_to eq(chord)
+        expect(@chords.choose_transformation(chord)).to be_kind_of(Array)
+      end
+    end
+
     describe "trans_shift_pitch" do
       it "should add the base_pitch to a given chord array" do
         expect(@chords.trans_shift_pitch( chord, 60 )).to eq( [61, 63, 65, 67] )

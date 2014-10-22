@@ -26,6 +26,14 @@ class MakeChords
     @phrase_length = [3, 4, 6, 8].shuffle.first
   end
 
+  def choose_transformation(chord)
+    trans_methods = [ :trans_ascending, :trans_descending, :trans_invert_1, :trans_invert_2, :trans_invert_3, :trans_parsimonious_voice_leading ]
+    # consider refactor to pull all transform methods into a module or class
+    # then instead of explicity naming all methods in array, use module_name.instance_methods to populate array with all extant methods
+    # this methods will not work for methods that require multiple inputs (eg chord and shift amount)
+    send(trans_methods.sample, chord)
+  end
+
   def trans_ascending(chord)
     chord.sort!
   end
