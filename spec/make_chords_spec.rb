@@ -73,6 +73,7 @@ describe MakeChords do
     let(:chord) { [1, 3, 5, 7] }
 
     describe "transform_chord" do
+      # use case to pick from the available transformation methods?
     end
 
     describe "trans_shift_pitch" do
