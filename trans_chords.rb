@@ -9,6 +9,7 @@ module TransChords
       trans_methods = argument_req_trans
       send(trans_methods.sample, arguments[0], arguments[1])
     end
+    #  Needs testing.  Gross
   end
 
   def trans_arg_parser(*args)
@@ -16,8 +17,9 @@ module TransChords
     args.each do |x|
       arguments << x
     end
-    raise "chord required" if arguments[0] == 0 || arguments[0] == nil
-    raise "too many arguments" if arguments.length > 2
+    raise 'chord required' if arguments[0] == 0 || arguments[0] == nil
+    raise 'too many arguments' if arguments.length > 2
+    # Catch these?
     return arguments
   end
 
@@ -26,11 +28,13 @@ module TransChords
     trans_methods -= [ :choose_transformation, :trans_arg_parser, :trans_shift_pitch ]
     # keep this list updated with any methods that need a second argument (pitch shift, etc.)
     return trans_methods
+    # testing
   end
 
   def argument_req_trans
     trans_methods = [ :trans_shift_pitch ]
     return trans_methods
+    # testing
   end
 
   def trans_ascending(chord)
