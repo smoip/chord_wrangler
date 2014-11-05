@@ -1,5 +1,7 @@
 module TransChords
 
+  #methods that choose transformations
+
   def choose_transformation(*args)
     arguments = self.trans_arg_parser(args)
     if arguments.length == 1
@@ -9,7 +11,6 @@ module TransChords
       trans_methods = argument_req_trans
       send(trans_methods.sample, arguments[0], arguments[1])
     end
-    #  Needs testing.  Gross
   end
 
   def trans_arg_parser(*args)
@@ -31,7 +32,6 @@ module TransChords
     # remove methods that require an argument
     # keep this list updated with any methods that need a second argument (pitch shift, etc.)
     return trans_methods
-    # test
   end
 
   def argument_req_trans
@@ -39,8 +39,9 @@ module TransChords
     trans_methods = [ :trans_shift_pitch ]
     # keep this list updated with any methods that need a second argument (pitch shift, etc.)
     return trans_methods
-    # testing
   end
+
+  #methods that execute transformations
 
   def trans_ascending(chord)
     chord.sort!
