@@ -1,78 +1,68 @@
-module TransChords
+require_relative './trans_chords'
 
-  def choose_transformation(*args)
-    arguments = self.trans_arg_parser(args)
-    if arguments.length == 1
-      trans_methods = no_argument_trans
-      send(trans_methods.sample, arguments[0])
-    else
-      trans_methods = argument_req_trans
-      send(trans_methods.sample, arguments[0], arguments[1])
+class MakeChords
+
+  include TransChords
+
+  attr_accessor :base_pitch, :base_chord, :score, :phrase_length
+
+  def initialize
+    @base_pitch = 60
+    @base_chord = []
+    @score = []
+    @phrase_length = 0
+  end
+
+  def generate_chord
+    chord = []
+    until chord.length == 4 do
+      chord << choose_member
+      chord.uniq!
     end
-    #  Needs testing.  Gross
+    return chord
   end
 
-  def trans_arg_parser(*args)
-    arguments = []
-    args.each do |x|
-      arguments << x
+  def choose_member
+    rand(11)
+  end
+
+  def choose_phrase_length
+    @phrase_length = [3, 4, 6, 8].shuffle.first
+  end
+
+  def generate_score
+    @base_chord = trans_shift_pitch(generate_chord, @base_pitch)
+    self.choose_phrase_length
+    @score << self.generate_phrase(@base_chord)
+  end
+
+  def generate_phrase(chord)
+    phrase = []
+    @phrase_length.times do
+      phrase << chord
     end
-    raise 'chord required' if arguments[0] == 0 || arguments[0] == nil
-    raise 'too many arguments' if arguments.length > 2
-    # Catch these?
-    return arguments
+    return phrase
   end
 
-  def no_argument_trans
-    trans_methods = TransChords.instance_methods
-    trans_methods -= [ :choose_transformation, :trans_arg_parser, :trans_shift_pitch ]
-    # keep this list updated with any methods that need a second argument (pitch shift, etc.)
-    return trans_methods
-    # testing
+  def print_score
+    puts "Generated Score: #{@score.flatten.to_s}"
   end
 
-  def argument_req_trans
-    trans_methods = [ :trans_shift_pitch ]
-    return trans_methods
-    # testing
+  def print_score_with_groupings
+    puts "Generated Score(groupings shown): #{@score}"
   end
 
-  def trans_ascending(chord)
-    chord.sort!
+  def print_score_max_format
+    max_score = @score.flatten.join(" ")
+    puts "Generated Score(max format): #{max_score}"
+    puts "Length(for max table): #{@score.flatten.length}"
+    return max_score
   end
 
-  def trans_descending(chord)
-    chord.sort.reverse!
-  end
+end
 
-  def trans_invert_1(chord)
-    chord.rotate
-  end
-
-  def trans_invert_2(chord)
-    chord.rotate(2)
-  end
-
-  def trans_invert_3(chord)
-    chord.rotate(3)
-  end
-
-  def trans_shift_pitch(chord, shift_amount)
-    chord.each.collect do |member|
-      member += shift_amount
-    end
-  end
-
-  def trans_parsimonious_voice_leading(chord)
-    unique_token = false
-    until unique_token == true
-      trans_chord = chord.dup
-      changed_member = ( rand(chord.length) ) - 1
-      change_amount = [ -1, 1, -2, 2 ].shuffle.first
-      trans_chord[changed_member] += change_amount
-      unique_token = true if trans_chord.uniq == trans_chord
-    end
-    return trans_chord
-  end
-
+if __FILE__==$0
+  chords = MakeChords.new
+  chords.generate_score
+  chords.print_score_with_groupings
 end
