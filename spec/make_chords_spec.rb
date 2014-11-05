@@ -72,6 +72,25 @@ describe MakeChords do
   describe "chord transformations" do
     let(:chord) { [1, 3, 5, 7] }
 
+    describe "trans_arg_parser" do
+      it "returns an array of one argument" do
+        expect(@chords.trans_arg_parser(chord)).to eq([ chord ])
+      end
+      it "returns an array of two arguments" do
+        expect(@chords.trans_arg_parser(chord, 12)).to eq([ chord, 12 ])
+      end
+      it "raises an error if the first argument is not a an array" do
+        expect { @chords.trans_arg_parser( 'foo' ) }.to raise_error
+      end
+      it "raises an error if the second argument (if present) is not an integer" do
+        expect { @chords.trans_arg_parser( chord, 'foo' ) }.to raise_error
+      end
+      it "raises an error if there are more than two arguments" do
+        expect { @chords.trans_arg_parser( chord, 1, 'foo' ) }.to raise_error
+      end
+
+    end
+
     describe "choose_transformation" do
       it "should return an altered chord array" do
         expect(@chords.choose_transformation(chord)).not_to eq(chord)
