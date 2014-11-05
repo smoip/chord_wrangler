@@ -14,25 +14,30 @@ module TransChords
 
   def trans_arg_parser(*args)
     arguments = args.map { |x| x }
-    raise "array required" unless arguments[0].class == Array
-    raise "too many arguments" if arguments.length > 2
+    raise "chord(array) required" unless arguments[0].class == Array
+    raise "too many arguments(2 max)" if arguments.length > 2
     if arguments.length == 2
-      raise "interval required" unless arguments[1].class == Integer || arguments[1].class.superclass == Integer
+      raise "interval(integer) required" unless arguments[1].class == Integer || arguments[1].class.superclass == Integer
     end
     return arguments
-    #  test incl exceptions
   end
 
   def no_argument_trans
+    # choose a transformation that does NOT take an argument
     trans_methods = TransChords.instance_methods
-    trans_methods -= [ :choose_transformation, :trans_arg_parser, :trans_shift_pitch ]
+    trans_methods -= [ :choose_transformation, :trans_arg_parser, :no_argument_trans, :argument_req_trans ]
+    # remove methods that choose methods
+    trans_methods -= [ :trans_shift_pitch ]
+    # remove methods that require an argument
     # keep this list updated with any methods that need a second argument (pitch shift, etc.)
     return trans_methods
     # test
   end
 
   def argument_req_trans
+    # choose a transformation that does take an argument
     trans_methods = [ :trans_shift_pitch ]
+    # keep this list updated with any methods that need a second argument (pitch shift, etc.)
     return trans_methods
     # testing
   end
