@@ -98,6 +98,18 @@ describe MakeChords do
       end
     end
 
+    describe "trans_arg_parser" do
+      it "should raise error with invalid input arguments" do
+        expect(@chords.trans_arg_parser).to raise_error('chord required')
+        expect(@chords.trans_arg_parser( chord, 5, "foobar" )). to raise_error
+      end
+
+      it "should not raise erros with valid input arguments" do
+        expect(@chords.trans_arg_parser( chord )).not_to raise_error
+        expect(@chords.trans_arg_parser( chord, 5 )).not_to raise_error
+      end
+    end
+
     describe "trans_shift_pitch" do
       it "should add the base_pitch to a given chord array" do
         expect(@chords.trans_shift_pitch( chord, 60 )).to eq( [61, 63, 65, 67] )
