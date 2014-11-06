@@ -8,7 +8,6 @@ class ChordMaker
 
   def initialize
     @base_pitch = 60
-    @base_chord = []
     @score = []
   end
 
@@ -39,19 +38,24 @@ class ChordMaker
     else
       raise "integer required"
     end
+    # still need to implement passing arguments in from generate score
   end
 
   def generate_score
-    @base_chord = trans_shift_pitch(generate_chord, @base_pitch)
+    @base_chord ||= trans_shift_pitch(generate_chord, @base_pitch)
     choose_phrase_length
-    @score << generate_phrase(@base_chord)
+    choose_form.times do
+      @score << generate_section
+    end
   end
 
   def generate_section
     if @score == []
       chord = @base_chord
     else
-      chord = choose_transformation
+      chord = choose_transformation(@score[0].last)
+      # also, this is not working!  FIX FIX FIX
+      # need to implement choosing between a one and two variable transform
     end
     generate_phrase(chord)
   end

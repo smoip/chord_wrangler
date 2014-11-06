@@ -7,7 +7,6 @@ describe ChordMaker do
 
   it "should have instance variables" do
     expect(@chords.base_pitch).to be_kind_of(Integer)
-    expect(@chords.base_chord).to be_kind_of(Array)
     expect(@chords.score).to be_kind_of(Array)
   end
 
@@ -57,6 +56,30 @@ describe ChordMaker do
     end
     it "should assign chords to score" do
       expect(@chords.score[0]).to be_kind_of(Array)
+    end
+
+    describe "generate_section" do
+      before do
+        allow(@chords).to receive(:no_argument_trans).and_return( [:trans_invert_1] ) 
+        @phrase_length = 1
+      end
+
+      describe "first section" do
+        before { @score = [] }
+
+        it "should generate a phrase from @base_chord" do
+          expect(@chords.generate_section[0]).to eq( [[ 61, 62, 63, 64 ]] )
+        end
+      end
+
+      describe "subsequent sections" do
+        before { @score = [[[ 1, 2, 3, 4 ]]] }
+
+        it "should generate phrase from an altered chord" do
+          expect(@chords.generate_section[1]).not_to eq( [[ 61, 62, 63, 64 ]] )
+          # what's happening here? fail fail fail
+        end
+      end
     end
 
     describe "generate_phrase" do

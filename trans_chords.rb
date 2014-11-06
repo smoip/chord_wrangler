@@ -26,8 +26,9 @@ module TransChords
   def no_argument_trans
     # choose a transformation that does NOT take an argument
     trans_methods = TransChords.instance_methods
-    trans_methods -= [ :choose_transformation, :trans_arg_parser, :no_argument_trans, :argument_req_trans ]
+    trans_methods -= [ :choose_transformation, :trans_arg_parser, :no_argument_trans, :argument_req_trans, :trans_parsimonious_voice_leading ]
     # remove methods that choose methods
+    # removed parsimonious vl for testing purposes.  Shit's busted.
     trans_methods -= [ :trans_shift_pitch ]
     # remove methods that require an argument
     # keep this list updated with any methods that need a second argument (pitch shift, etc.)
@@ -44,11 +45,11 @@ module TransChords
   #methods that execute transformations
 
   def trans_ascending(chord)
-    chord.sort!
+    chord.sort
   end
 
   def trans_descending(chord)
-    chord.sort.reverse!
+    chord.sort.reverse
   end
 
   def trans_invert_1(chord)
