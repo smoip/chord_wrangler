@@ -1,6 +1,6 @@
 require_relative './trans_chords'
 
-class MakeChords
+class ChordMaker
 
   include TransChords
 
@@ -10,7 +10,6 @@ class MakeChords
     @base_pitch = 60
     @base_chord = []
     @score = []
-    @phrase_length = 0
   end
 
   def generate_chord
@@ -27,7 +26,7 @@ class MakeChords
   end
 
   def choose_phrase_length
-    @phrase_length = [3, 4, 6, 8].shuffle.first
+    @phrase_length ||= [3, 4, 6, 8].shuffle.first
   end
 
   def choose_form(*args)
@@ -44,8 +43,17 @@ class MakeChords
 
   def generate_score
     @base_chord = trans_shift_pitch(generate_chord, @base_pitch)
-    self.choose_phrase_length
-    @score << self.generate_phrase(@base_chord)
+    choose_phrase_length
+    @score << generate_phrase(@base_chord)
+  end
+
+  def generate_section
+    if @score == []
+      chord = @base_chord
+    else
+      chord = choose_transformation
+    end
+    generate_phrase(chord)
   end
 
   def generate_phrase(chord)
@@ -74,7 +82,7 @@ class MakeChords
 end
 
 if __FILE__==$0
-  chords = MakeChords.new
+  chords = ChordMaker.new
   chords.generate_score
   chords.print_score_with_groupings
 end

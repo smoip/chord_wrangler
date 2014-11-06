@@ -1,15 +1,14 @@
 require 'spec_helper'
 
-describe MakeChords do
+describe ChordMaker do
 
-  before { @chords = MakeChords.new }
+  before { @chords = ChordMaker.new }
   subject{ @chords }
 
   it "should have instance variables" do
     expect(@chords.base_pitch).to be_kind_of(Integer)
     expect(@chords.base_chord).to be_kind_of(Array)
     expect(@chords.score).to be_kind_of(Array)
-    expect(@chords.phrase_length).to be_kind_of(Integer)
   end
 
   describe "generate_chord" do

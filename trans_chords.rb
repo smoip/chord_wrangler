@@ -76,8 +76,8 @@ module TransChords
       changed_member = ( rand(chord.length) ) - 1
       change_amount = [ -1, 1, -2, 2 ].shuffle.first
       trans_chord[changed_member] += change_amount
-      #78 is throwing an error when called from choose_transformation
-      #needs integration testing
+      # 78 is throwing an error when called from choose_transformation
+      # needs integration testing
       unique_token = true if trans_chord.uniq == trans_chord
     end
     return trans_chord
