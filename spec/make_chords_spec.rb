@@ -32,6 +32,20 @@ describe MakeChords do
     end
   end
 
+  describe "choose_form" do
+    it "should return a random number when no argument is supplied" do
+      expect(@chords.choose_form).to be_between(1, 6).inclusive
+    end
+
+    it "should return the passed number when an argument is supplied" do
+      expect(@chords.choose_form( 4 )).to eq(4)
+    end
+
+    it "raises an error if the argument is not a number" do
+      expect { @chords.choose_form("boo berries") }.to raise_error
+    end
+  end
+
   describe "generate_score" do
     before do
       @chords.base_pitch = 60

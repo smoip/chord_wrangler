@@ -30,6 +30,18 @@ class MakeChords
     @phrase_length = [3, 4, 6, 8].shuffle.first
   end
 
+  def choose_form(*args)
+    # chooses binary, ternary
+    case args[0]
+    when Fixnum || Integer
+      return args[0]
+    when nil
+      return ( rand(5) + 1 )
+    else
+      raise "integer required"
+    end
+  end
+
   def generate_score
     @base_chord = trans_shift_pitch(generate_chord, @base_pitch)
     self.choose_phrase_length
