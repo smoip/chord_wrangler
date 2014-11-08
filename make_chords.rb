@@ -41,8 +41,12 @@ class ChordMaker
     # still need to implement passing arguments in from generate score
   end
 
-  def generate_score
+  def base_chord
     @base_chord ||= trans_shift_pitch(generate_chord, @base_pitch)
+  end
+
+  def generate_score
+    base_chord
     choose_phrase_length
     choose_form.times do
       @score << generate_section
