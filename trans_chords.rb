@@ -28,7 +28,7 @@ module TransChords
     trans_methods = TransChords.instance_methods
     trans_methods -= [ :choose_transformation, :trans_arg_parser, :no_argument_trans, :argument_req_trans, :trans_parsimonious_voice_leading ]
     # remove methods that choose methods
-    # removed parsimonious vl for testing purposes.  Shit's busted.
+    # removed parsimonious vl for testing purposes.  Not working.
     trans_methods -= [ :trans_shift_pitch ]
     # remove methods that require an argument
     # keep this list updated with any methods that need a second argument (pitch shift, etc.)

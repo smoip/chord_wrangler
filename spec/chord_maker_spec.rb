@@ -60,7 +60,7 @@ describe ChordMaker do
 
     describe "generate_section" do
       before do
-        allow(@chords).to receive(:no_argument_trans).and_return( [:trans_invert_1] ) 
+        allow(@chords).to receive(:no_argument_trans).and_return( [:trans_invert_1] )
         @phrase_length = 1
       end
 
@@ -77,7 +77,7 @@ describe ChordMaker do
 
         it "should generate phrase from an altered chord" do
           expect(@chords.generate_section[1]).not_to eq( [[ 61, 62, 63, 64 ]] )
-          # what's happening here? fail fail fail
+          # something is amiss...
         end
       end
     end
@@ -108,11 +108,12 @@ describe ChordMaker do
   describe "chord transformations" do
     let(:chord) { [1, 3, 5, 7] }
 
-    
+
 
     describe "choose_transformation" do
       it "should return an altered chord array" do
         expect(@chords.choose_transformation(chord)).not_to eq(chord)
+        expect(@chords.choose_transformation(chord)).to eq(chord)
         expect(@chords.choose_transformation(chord)).to be_kind_of(Array)
       end
 
