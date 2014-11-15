@@ -7,9 +7,11 @@ module TransChords
     if arguments.length == 1
       trans_methods = no_argument_trans
       send(trans_methods.sample, arguments[0]).flatten(1)
+      # why do I need to flatten this?
     else
       trans_methods = argument_req_trans
       send(trans_methods.sample, arguments[0], arguments[1]).flatten(1)
+      # ditto.
     end
   end
 
