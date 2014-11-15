@@ -3,13 +3,13 @@ module TransChords
   #methods that choose transformations
 
   def choose_transformation(*args)
-    arguments = self.trans_arg_parser(args)
+    arguments = trans_arg_parser(args)
     if arguments.length == 1
       trans_methods = no_argument_trans
-      send(trans_methods.sample, arguments[0])
+      send(trans_methods.sample, arguments[0]).flatten(1)
     else
       trans_methods = argument_req_trans
-      send(trans_methods.sample, arguments[0], arguments[1])
+      send(trans_methods.sample, arguments[0], arguments[1]).flatten(1)
     end
   end
 
