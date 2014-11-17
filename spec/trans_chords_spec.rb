@@ -34,8 +34,8 @@ describe "chord transformations" do
       end
 
       describe "no_argument_trans" do
-        it "should choose a method name" do
-          expect(subject.no_argument_trans[0]).to be_kind_of(Symbol)
+        it "should choose a valid method name" do
+          expect(subject.no_argument_trans).to include( :trans_ascending )
         end
         it "should not choose a method which chooses methods" do
           expect(subject.no_argument_trans).not_to include( :choose_transformation, :trans_arg_parser, :no_argument_trans, :argument_req_trans )
