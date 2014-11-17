@@ -6,10 +6,12 @@ describe "chord transformations" do
 
   describe "choose_transformation" do
     it "should return a one-dimensional array with the same number of elements as the input chord" do
-      expect(subject.choose_transformation(chord).length).to eq(4)
+      expect(subject.choose_transformation(chord).length).to eq( chord.length )
+      expect(subject.choose_transformation(chord)[0][0]).to eq( nil )
+       # on to something with line 10 failing...
     end
     it "should return an altered chord array" do
-      expect(subject.choose_transformation(chord)).not_to eq(chord)
+      expect(subject.choose_transformation(chord)).not_to eq( chord )
     end
 
     describe "transformation choice" do

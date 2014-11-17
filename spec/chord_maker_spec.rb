@@ -84,7 +84,8 @@ describe ChordMaker do
 
     describe "generate_phrase" do
 
-      before { @base_chord = [ 1, 2, 3, 4 ]}
+      before { @base_chord = [ 1, 2, 3, 4 ] }
+      before { subject.phrase_length = 2 }
 
       it "should assign chords 'phrase_length' number of times" do
         expect(@chords.generate_phrase(@base_chord).length).to eq(@chords.phrase_length)
@@ -92,6 +93,10 @@ describe ChordMaker do
 
       it "should assign arrays of chords to phrase" do
         expect(@chords.generate_phrase(@base_chord)[0]).to be_kind_of(Array)
+      end
+
+      it "returns a phrase array containing mutltiple nested chord arrays" do
+        expect(@chords.generate_phrase(@base_chord)).to eq( [ @base_chord, @base_chord ] )
       end
     end
   end
