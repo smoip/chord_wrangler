@@ -54,14 +54,16 @@ class ChordMaker
   end
 
   def generate_section
+    section = []
     if @score == []
       chord = @base_chord
     else
-      chord = choose_transformation(@score[0].last)
+      chord = choose_transformation(@score.last.last.last)
       # also, this is not working!  FIX FIX FIX
       # need to implement choosing between a one and two variable transform
     end
-    generate_phrase(chord)
+    section << generate_phrase(chord)
+    return section
   end
 
   def generate_phrase(chord)
