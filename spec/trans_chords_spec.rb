@@ -42,6 +42,9 @@ describe "chord transformations" do
         it "raises an error if there are more than two arguments" do
           expect { subject.trans_arg_parser( chord, 1, 'foo' ) }.to raise_error
         end
+        it "raises an error if there is not at least one argument" do
+          expect { subject.trans_arg_parser }.to raise_error
+        end
       end
 
       describe "no_argument_trans" do

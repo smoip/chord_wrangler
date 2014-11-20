@@ -4,13 +4,9 @@ module TransChords
 
   def choose_transformation(*args)
     arguments = trans_arg_parser(args)
-    if arguments.length == 1
-      transformed = transform_one_arg(arguments[0])
-      return transformed
-    else
-      transformed = transform_two_args(arguments[0], arguments[1])
-      return transformed
-    end
+    return transform_one_arg(arguments[0]) unless arguments.length == 2
+    return transform_two_args(arguments[0], arguments[1]) unless arguments.length == 1
+    # somehow I'm repeatedly calling transform_two_args after already calling transform_one_arg
   end
 
   def transform_one_arg(chord)
@@ -32,6 +28,7 @@ module TransChords
     if arguments.length == 2
       raise "interval(integer) required" unless arguments[1].class == Integer || arguments[1].class.superclass == Integer
     end
+    raise "at least one argument required" if arguments == []
     return arguments
   end
 

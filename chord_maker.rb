@@ -59,7 +59,7 @@ class ChordMaker
       chord = @base_chord
     else
       chord = choose_transformation(@score.last.last.last)
-      # also, this is not working!  FIX FIX FIX
+      # this might be the problem - allowing a nil argument to be passed - why?
       # need to implement choosing between a one and two variable transform
     end
     section << generate_phrase(chord)
