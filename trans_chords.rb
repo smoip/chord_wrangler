@@ -1,21 +1,31 @@
 module TransChords
 
-  #methods that choose transformations
+  # methods that choose transformations
 
   def choose_transformation(*args)
     arguments = trans_arg_parser(args)
     if arguments.length == 1
-      trans_methods = no_argument_trans
-      send(trans_methods.sample, arguments[0]).flatten(1)
-      # why do I need to flatten this?
+      transformed = transform_one_arg(arguments[0])
+      return transformed
     else
-      trans_methods = argument_req_trans
-      send(trans_methods.sample, arguments[0], arguments[1]).flatten(1)
-      # ditto.
+      transformed = transform_two_args(arguments[0], arguments[1])
+      return transformed
     end
   end
 
+  def transform_one_arg(chord)
+    (send(no_argument_trans.sample, chord)).flatten(1)
+    # why do I need to flatten this?
+  end
+
+  def transform_two_args(chord, arg)
+    (send(argument_req_trans.sample, chord, arg)).flatten(1)
+    # why do I need to flatten this?
+  end
+
+
   def trans_arg_parser(*args)
+    # needs more testing - is this the problem?
     arguments = args.map { |x| x }
     raise "chord(array) required" unless arguments[0].class == Array
     raise "too many arguments(2 max)" if arguments.length > 2

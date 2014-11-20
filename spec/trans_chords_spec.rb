@@ -8,10 +8,21 @@ describe "chord transformations" do
     it "should return a one-dimensional array with the same number of elements as the input chord" do
       expect(subject.choose_transformation(chord).length).to eq( chord.length )
       expect(subject.choose_transformation(chord).flatten).to eq( subject.choose_transformation(chord) )
-       # on to something with line 10 failing...
     end
     it "should return an altered chord array" do
       expect(subject.choose_transformation(chord)).not_to eq( chord )
+    end
+
+    describe "transform_one_arg" do
+      it "should execute a transform and return an altered chord" do
+        expect(subject.transform_one_arg(chord)).not_to eq( chord )
+      end
+    end
+
+    describe "transform_two_args" do
+       it "should execute a transform and return an altered chord" do
+        expect(subject.transform_two_args(chord, 1)).not_to eq( chord )
+        end
     end
 
     describe "transformation choice" do
