@@ -48,9 +48,12 @@ class ChordMaker
   def generate_score
     base_chord
     choose_phrase_length
-    choose_form.times do
+    # change this back after test
+    # choose_form.times do
+    2.times do
       @score << generate_section
     end
+    puts "score: #{@score}"
   end
 
   def generate_section
@@ -60,6 +63,11 @@ class ChordMaker
     else
       chord = choose_transformation(@score.last.last.last)
       # this might be the problem - allowing a nil argument to be passed - why?
+      # maybe array.last can generate nil - check?
+      # YES - calling .last on an emptry array returns nil
+      # Examine your data structure
+      # I need to see the output of a score object
+      # ------> !!!! PAY ATTENTION TO ME!  I'M PROBABLY THE CULPRIT!
       # need to implement choosing between a one and two variable transform
     end
     section << generate_phrase(chord)

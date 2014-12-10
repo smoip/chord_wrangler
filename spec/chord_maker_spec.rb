@@ -58,6 +58,12 @@ describe ChordMaker do
       # don't test on Type - also this test doesn't do much right now
     end
 
+    it "should nest sections multiple properly" do
+      allow(subject).to recieve(:generate_section).and_return( [ [ [1, 2, 3, 4], [1, 2, 3, 4] ], [ [1, 2, 3, 4], [1, 2, 3, 4] ] ] )
+      allow(subject).to recieve(:choose_form).and_return(2)
+      expect(subject.score).to eq( [ [ [ [1, 2, 3, 4], [1, 2, 3, 4] ], [ [1, 2, 3, 4], [1, 2, 3, 4] ] ], [ [ [1, 2, 3, 4], [1, 2, 3, 4] ], [ [1, 2, 3, 4], [1, 2, 3, 4] ] ] ] )
+    end
+
     describe "generate_section" do
       before do
         allow(subject).to receive(:no_argument_trans).and_return( [:trans_invert_1] )

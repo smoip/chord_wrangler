@@ -4,8 +4,14 @@ module TransChords
 
   def choose_transformation(*args)
     arguments = trans_arg_parser(args)
-    return transform_one_arg(arguments[0]) unless arguments.length == 2
-    return transform_two_args(arguments[0], arguments[1]) unless arguments.length == 1
+    if arguments.length === 2
+      transformation =  transform_two_args(arguments[0], arguments[1])
+    elsif arguments.length === 1
+      transformation = transform_one_arg(arguments[0])
+    end
+    return transformation
+    # return transform_one_arg(arguments[0]) unless arguments.length == 2
+    # return transform_two_args(arguments[0], arguments[1]) unless arguments.length == 1
     # somehow I'm repeatedly calling transform_two_args after already calling transform_one_arg
   end
 
